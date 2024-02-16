@@ -1,6 +1,9 @@
-const express = require('express');
-const port =3000;
-const cors=require("cors")
+const express = require("express");
+const authRoutes = require("./routes/authroutes")
+const userRoutes = require("./routes/Users")
+const accountRoutes = require('./routes/Account')
+const port = 3000;
+const cors = require("cors")
 const app = express();//middle ware
 
 const bodyParser = require('body-parser')//neating and cleaning 
@@ -9,9 +12,9 @@ const corsOptions = {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
-  };
-  
-  app.use(cors(corsOptions));
+};
+
+app.use(cors(corsOptions));
 //   app.use((req, res, next) => {
 //     res.header('Access-Control-Allow-Headers', 'Content-Type');
 //     next();
@@ -19,18 +22,20 @@ const corsOptions = {
 require('./db');
 require('./models/Users');
 require("./models/ModalDataSchema")
-const authRoutes = require('./routes/authroutes');
-const requireToken  = require('./Middlewares/AuthTokenRequired');
+
+const requireToken = require('./Middlewares/AuthTokenRequired');
+const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware');
 app.use(bodyParser.json())//server se jo data ata hei voh json mei aa jaye so
-app.use(authRoutes);
+app.use(mongodbMiddleware)
+app.use("/auth", authRoutes)
+app.use("/users", userRoutes)
+app.use("/account",accountRoutes)
 
 
-app.get('/',requireToken, (req,res)=>{
-    
-    console.log(req.user);
+app.get('/', requireToken, (req, res) => {
     res.send(req.user);
 })
 
-app.listen(port,()=>{
+app.listen(port, () => {
     console.log(`Server is running on ${port}`)
 })

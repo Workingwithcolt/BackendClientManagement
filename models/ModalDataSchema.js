@@ -53,4 +53,6 @@ const modalDataSchema = new mongoose.Schema({
     console.log(modalDataSchema);
     next();
   })
-mongoose.model("ModalDataSchema",modalDataSchema)
+
+
+module.exports = mongoose.model("ModalDataSchema",modalDataSchema)

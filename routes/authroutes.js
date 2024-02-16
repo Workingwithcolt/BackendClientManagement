@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const cors=require("cors")
+const cors = require("cors")
+const { USER_PATH } = require('../MongoDB/MongoDbControllerFactory');
 const mongoose = require('mongoose')
-const User = mongoose.model("User");
+const ModalDataSchema = require('../models/ModalDataSchema');
+const Users = require('../models/Users');
 const jwt = require('jsonwebtoken');
-const ModalDataSchema = mongoose.model("ModalDataSchema");
+
 require('dotenv').config();
 "use strict";
 const nodemailer = require("nodemailer");
+
 var token
 
 //node mailer
@@ -19,8 +22,8 @@ async function mailer(recieveremail, VerificationCode) {
         port: 465,
 
         secure: true, // true for 465, false for other ports
-        ignoreTLS:true,
-        requireTLS:false,
+        ignoreTLS: true,
+        requireTLS: false,
         auth: {
             user: "ketanmaheshdoshi@gmail.com", // generated ethereal user
             pass: "njnn daxr jfjz grrj", // generated ethereal password
@@ -45,8 +48,8 @@ async function mailer(recieveremail, VerificationCode) {
 //
 
 
-router.post('/signup',async(req,res)=>{
-    
+router.post('/signup', async (req, res) => {
+
     console.log("signup clicked")
     //console.log('data sent by clinet ' ,req.body);  
 
@@ -60,53 +63,59 @@ router.post('/signup',async(req,res)=>{
         dob,
         address
     })
-    
-    
 
-        try {
-            await user.save();
 
-            token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-            //res.send("send working?")
-            //res.send({ message: "User Registered Successfully", token });
-            res.send({ message: "User Registered Successfully", token });
 
-            
-         }
-        catch (err) {
-            console.log(err);
-        }
-    
-    })
-router.post('/signin',async(req,res)=>{
+    try {
+        await user.save();
+
+        token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+        //res.send("send working?")
+        //res.send({ message: "User Registered Successfully", token });
+        res.send({ message: "User Registered Successfully", token });
+
+
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+})
+
+router.post('/signin', async (req, res) => {
+    var usersController =
+        req.locals.controllerFactory.getUserController(req.locals)
     const { email, password } = req.body;
-        if (!email || !password) {
-            return res.status(422).json({ error: "Please add email or password" });
+    if (!email || !password) {
+        return res.status(422).json({ error: "Please add email or password" });
+    }
+    const savedUser = await usersController.getOne({ email: email })
+
+    if (!savedUser) {
+        return res.status(422).json({ error: "Invalid Credentials" });
+    }
+    try {
+        const check = password.localeCompare(savedUser.password)
+        if (check == 0) {
+            console.log("password match");
+            const token = jwt.sign({ _id: savedUser._id }, process.env.JWT_SECRET);
+            res.send({ token });
         }
-        const savedUser = await User.findOne({ email: email })
-    
-        if (!savedUser) {
+        else {
+            console.log("password dosent match")
             return res.status(422).json({ error: "Invalid Credentials" });
         }
-        try {
-            const check = password.localeCompare(savedUser.password)
-            if(check==0){
-                console.log("password match");
-                const token = jwt.sign({ _id: savedUser._id }, process.env.JWT_SECRET);
-                res.send({ token });
-            }
-            else{
-                console.log("password dosent match")
-                return res.status(422).json({ error: "Invalid Credentials" });            }                    
-        }        
-        catch (err) {
-            console.log(err);
-        }
-    })
-router.post('/clientData',async(req,res)=>{
+    }
+    catch (err) {
+        console.log(err);
+    }
+})
+
+router.post('/clientData', async (req, res) => {
     console.log("print data");
-    const { title, clientName, projectType, projectHead,rccDesignerName,model3D,buildingApproval,plinth,buildingCompletion,pan,aadhar,pin,email} = req.body;
+    const { title, clientName, projectType, projectHead, rccDesignerName, model3D, buildingApproval, plinth, buildingCompletion, pan, aadhar, pin, email } = req.body;
     console.log(req.body);
+
     const modalDataSchema = new ModalDataSchema({
         title,
         clientName,
@@ -130,8 +139,8 @@ router.post('/clientData',async(req,res)=>{
         //res.send({ message: "User Registered Successfully", token });
         res.send({ message: "Data sent  Registered Successfully" });
 
-        
-     }
+
+    }
     catch (err) {
         console.log(err);
     }
@@ -139,41 +148,41 @@ router.post('/clientData',async(req,res)=>{
     //res.send("data bhetla");
 })
 
-router.post('/verify',async(req,res)=>{
+router.post('/verify', async (req, res) => {
     console.log("signup clicked")
-    console.log('data sent by clinet ' ,req.body);  
-    const { name, email, password, dob,address} = req.body;
+    console.log('data sent by clinet ', req.body);
+    const { name, email, password, dob, address } = req.body;
 
 
-    if (!name || !email || !password || !dob|| !address ) {
-       return res.status(422).json({ error: "Please add all the fields" });
+    if (!name || !email || !password || !dob || !address) {
+        return res.status(422).json({ error: "Please add all the fields" });
     }
 
     User.findOne({ email: email })
-    .then(async (savedUser) => {
-        if (savedUser) {
-            return res.status(422).json({ error: "Invalid Credentials" });
-        }
-    try
-    {
-        let VerificationCode = Math.floor(100000 + Math.random() * 900000);
-        let user = [
-            {
-                name,
-                email,
-                password,
-                dob,
-                address,
-                VerificationCode
+        .then(async (savedUser) => {
+            if (savedUser) {
+                return res.status(422).json({ error: "Invalid Credentials" });
             }
-        ]
-        await mailer(email, VerificationCode);
-        res.send({ message: "Verification Code Sent to your Email", udata: user });
-    }
-    catch(err){
-        console.log(err);
-    }
+            try {
+                let VerificationCode = Math.floor(100000 + Math.random() * 900000);
+                let user = [
+                    {
+                        name,
+                        email,
+                        password,
+                        dob,
+                        address,
+                        VerificationCode
+                    }
+                ]
+                await mailer(email, VerificationCode);
+                res.send({ message: "Verification Code Sent to your Email", udata: user });
+            }
+            catch (err) {
+                console.log(err);
+            }
+        })
+
 })
-    
-})
-module.exports=router;
+
+module.exports = router;
