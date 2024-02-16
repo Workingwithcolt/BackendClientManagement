@@ -6,11 +6,13 @@ const mongoose = require('mongoose')
 const ModalDataSchema = require('../models/ModalDataSchema');
 const Users = require('../models/Users');
 const jwt = require('jsonwebtoken');
+const fileupload = require("../models/FileSchema");
 
 require('dotenv').config();
 "use strict";
 const nodemailer = require("nodemailer");
-
+const multer = require('multer');
+const path = require('path')
 var token
 
 //node mailer
@@ -46,10 +48,41 @@ async function mailer(recieveremail, VerificationCode) {
 }
 
 //
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/Images'); // Specify null for the error argument
+    },
+    filename: (req, file, cb) => {
+        // Generate a unique filename using the original filename, current timestamp, and file extension
+        cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname));
+    }
+});
 
-
-router.post('/signup', async (req, res) => {
-
+const upload = multer({
+    storage:storage
+})
+router.post('/upload',upload.single('file'),async(req,res)=>{
+    console.log(req.file)
+    const fileupload = new fileupload({
+        Image
+    })
+    try{
+        await fileupload.save();
+    }
+    catch(err){
+        console.log(err);
+    }
+    // fileupload.create({image:req.file.filename})
+    // .then(result=>res.json(result))
+    // .catch(err=>console.log(err))
+})
+router.get('/getImage',(req,res)=>{
+    fileupload.find()
+    .then(users=>res.json(users))
+    .catch(err=>res.json(err))
+})
+router.post('/signup',async(req,res)=>{
+    
     console.log("signup clicked")
     //console.log('data sent by clinet ' ,req.body);  
 

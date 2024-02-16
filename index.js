@@ -5,6 +5,8 @@ const accountRoutes = require('./routes/Account')
 const port = 3000;
 const cors = require("cors")
 const app = express();//middle ware
+const multer = require('multer')
+const path =require('path')
 
 const bodyParser = require('body-parser')//neating and cleaning 
 const corsOptions = {
@@ -30,6 +32,7 @@ app.use(mongodbMiddleware)
 app.use("/auth", authRoutes)
 app.use("/users", userRoutes)
 app.use("/account",accountRoutes)
+app.use(express.static('public/Images'))
 
 
 app.get('/', requireToken, (req, res) => {
