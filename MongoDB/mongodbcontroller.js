@@ -9,7 +9,7 @@ class MongodbControllerInterface {
     async create(createData) {
         const data = new this.Modal(createData);
         data.save();
-        return true;
+        return { id: data._id.toHexString() };
     }
 
     async getAll(query) {

@@ -1,5 +1,6 @@
 const ModalDataSchema = require("../models/ModalDataSchema");
 const Users = require("../models/Users");
+const Files = require("../models/FileSchema")
 const MongodbControllerInterface = require("./mongoDbController")
 
 const SKIP_AUTH = true;
@@ -13,6 +14,9 @@ class MongodbControllerFactory {
     }
     getAccounts(local) {
         return new MongodbControllerInterface(ModalDataSchema, local)
+    }
+    getFilesController(local) {
+        return new MongodbControllerInterface(Files, local)
     }
 }
 

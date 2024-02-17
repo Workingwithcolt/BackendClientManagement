@@ -2,11 +2,12 @@ const express = require("express");
 const authRoutes = require("./routes/authroutes")
 const userRoutes = require("./routes/Users")
 const accountRoutes = require('./routes/Account')
+const fileRoutes = require('./routes/file')
 const port = 3000;
 const cors = require("cors")
 const app = express();//middle ware
 const multer = require('multer')
-const path =require('path')
+const path = require('path')        
 
 const bodyParser = require('body-parser')//neating and cleaning 
 const corsOptions = {
@@ -28,10 +29,12 @@ require("./models/ModalDataSchema")
 const requireToken = require('./Middlewares/AuthTokenRequired');
 const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware');
 app.use(bodyParser.json())//server se jo data ata hei voh json mei aa jaye so
+
 app.use(mongodbMiddleware)
 app.use("/auth", authRoutes)
 app.use("/users", userRoutes)
-app.use("/account",accountRoutes)
+app.use("/account", accountRoutes)
+app.use("/file", fileRoutes)
 app.use(express.static('public/Images'))
 
 
