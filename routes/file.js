@@ -22,13 +22,14 @@ router.post('/', upload.single('file'), async (req, res) => {
     console.log(req.body);
     let data = await fileController.create(req.body)
     // await delteFileUnderFolder('D:/Server_Logingfg - Copy/public/Images')
-    console.log(data);
+    res.send(data)
 })
 
 router.get('/', async (req, res) => {
+    let query = req.query ? req.query : {};
     var fileController =
         req.locals.controllerFactory.getFilesController(req.locals)
-    let data = await fileController.getAll({})
+    let data = await fileController.getAll(query)
     res.send(data)
 })
 

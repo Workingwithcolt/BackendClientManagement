@@ -15,6 +15,10 @@ const fileSchema = new mongoose.Schema({
     contentType: {
         type: String,
         required: true
+    },
+    UniqueID:{
+        type:String,
+        required:true
     }
 })
 

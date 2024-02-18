@@ -8,7 +8,6 @@ router.get(
             req.locals.controllerFactory.getUserController(req.locals)
         var results =
             await usersController.getAll({});
-        console.log(results);
         res.send(results);
     }
 );
