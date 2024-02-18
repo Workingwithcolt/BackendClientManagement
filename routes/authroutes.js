@@ -21,7 +21,7 @@ async function mailer(recieveremail, VerificationCode) {
         requireTLS: false,
         auth: {
             user: "ketanmaheshdoshi@gmail.com", // generated ethereal user
-            pass: "njnn daxr jfjz grrj", // generated ethereal password
+            pass: "iytk vxgo ssbs vdez", // generated ethereal password
         },
     });
 
@@ -42,23 +42,10 @@ router.post('/signup', async (req, res) => {
 
     console.log("signup clicked")
     //console.log('data sent by clinet ' ,req.body);  
-
-    const { name, email, password, dob, address } = req.body;
-
-
-    const user = new User({
-        name,
-        email,
-        password,
-        dob,
-        address
-    })
-
-
-
+    var usersController =
+        req.locals.controllerFactory.getUserController(req.locals)
     try {
-        await user.save();
-
+        await usersController.create(req.body)
         token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
         //res.send("send working?")
         //res.send({ message: "User Registered Successfully", token });
@@ -139,8 +126,8 @@ router.post('/clientData', async (req, res) => {
 })
 
 router.post('/verify', async (req, res) => {
-    console.log("signup clicked")
-    console.log('data sent by clinet ', req.body);
+    var usersController = req.locals.controllerFactory.getUserController(req.locals)
+
     const { name, email, password, dob, address } = req.body;
 
 
@@ -148,7 +135,7 @@ router.post('/verify', async (req, res) => {
         return res.status(422).json({ error: "Please add all the fields" });
     }
 
-    User.findOne({ email: email })
+    usersController.getOne({ email: email })
         .then(async (savedUser) => {
             if (savedUser) {
                 return res.status(422).json({ error: "Invalid Credentials" });
