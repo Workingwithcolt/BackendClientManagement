@@ -88,42 +88,6 @@ router.post('/signin', async (req, res) => {
     }
 })
 
-router.post('/clientData', async (req, res) => {
-    console.log("print data");
-    const { title, clientName, projectType, projectHead, rccDesignerName, model3D, buildingApproval, plinth, buildingCompletion, pan, aadhar, pin, email } = req.body;
-    console.log(req.body);
-
-    const modalDataSchema = new ModalDataSchema({
-        title,
-        clientName,
-        projectType,
-        projectHead,
-        rccDesignerName,
-        model3D,
-        buildingApproval,
-        plinth,
-        buildingCompletion,
-        pan,
-        aadhar,
-        pin,
-        email
-    })
-    try {
-        await modalDataSchema.save();
-
-        //token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-        //res.send("send working?")
-        //res.send({ message: "User Registered Successfully", token });
-        res.send({ message: "Data sent  Registered Successfully" });
-
-
-    }
-    catch (err) {
-        console.log(err);
-    }
-
-    //res.send("data bhetla");
-})
 
 router.post('/verify', async (req, res) => {
     var usersController = req.locals.controllerFactory.getUserController(req.locals)

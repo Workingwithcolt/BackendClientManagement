@@ -1,4 +1,26 @@
 const mongoose = require('mongoose');
+// AllElevation: "sd"
+// AllFloorPlan: "sd"
+// BuildingApprovalDate: "2024-02-01"
+// ColumnFooting: "sd"
+// CompletionDate: "2024-02-06"
+// FileModel3D: ["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACDQA…AAJUj0AAAAAAAAAAAVM7/A0SGFk9CxehRAAAAAElFTkSuQmCC"]
+// PleanthBeam: "sd"
+// PresentationDraw: ["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACDQA…AAJUj0AAAAAAAAAAAVM7/A0SGFk9CxehRAAAAAElFTkSuQmCC"]
+// StairCaseDraw: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACDQ
+// adhar: "sdsd"
+// buildingCompletionDate: "sd"
+// clientName: "sd"
+// email: "sdsd@gmail.com"
+// firstSlab: ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAAAAAAAD…QAlFLRQAlFLRQAlFLRQAlFLRQAlFLRQAlFLRQAlFLRQB//9k="]
+// pan: "sd"
+// pin: "sd"
+// plinth: "sd"
+// projectHead: "sdsd"
+// projectType: "sdsd"
+// rccDesignerName: "sd"
+// title: "asd"
+
 const modalDataSchema = new mongoose.Schema({
   title: {
     type: String
@@ -18,19 +40,16 @@ const modalDataSchema = new mongoose.Schema({
   rccDesignerName: {
     type: String
   },
-  model3D: {
-    type: String
-
+  FileModel3D: {
+    type: [String],
   },
-  buildingApproval: {
+  BuildingApprovalDate: {
     type: String
-
   },
   plinth: {
     type: String
-
   },
-  buildingCompletion: {
+  buildingCompletionDate: {
     type: String
   },
   pan: {
@@ -43,6 +62,30 @@ const modalDataSchema = new mongoose.Schema({
     type: String
   },
   email: {
+    type: String
+  },
+  PresentationDraw: {
+    type: [String]
+  },
+  ColumnFooting: {
+    type: String
+  },
+  firstSlab: {
+    type: [String]
+  },
+  StairCaseDraw: {
+    type: String
+  },
+  PleanthBeam: {
+    type: String
+  },
+  CompletionDate: {
+    type: String
+  },
+  AllFloorPlan: {
+    type: String
+  },
+  AllElevation: {
     type: String
   }
 });
