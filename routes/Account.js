@@ -4,10 +4,11 @@ const router = express.Router();
 router.get(
     "/",
     async function (req, res) {
+        let query = req.query ? req.query : {};
         var usersController =
             req.locals.controllerFactory.getAccounts(req.locals)
         var results =
-            await usersController.getAll({});
+            await usersController.getAll(query);
 
         res.send(results);
     }

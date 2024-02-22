@@ -41,7 +41,11 @@ const modalDataSchema = new mongoose.Schema({
     type: String
   },
   FileModel3D: {
-    type: [String],
+    type: [{
+      ContentType: String,
+      value: String,
+      fileName:String
+    }],
   },
   BuildingApprovalDate: {
     type: String
@@ -65,16 +69,28 @@ const modalDataSchema = new mongoose.Schema({
     type: String
   },
   PresentationDraw: {
-    type: [String]
+    type: [{
+      ContentType: String,
+      value: String,
+      fileName:String
+    }]
   },
   ColumnFooting: {
     type: String
   },
   firstSlab: {
-    type: [String]
+    type: [{
+      ContentType: String,
+      value: String,
+      fileName:String
+    }]
   },
   StairCaseDraw: {
-    type: String
+    type: {
+      ContentType: String,
+      value: String,
+      fileName:String
+    }
   },
   PleanthBeam: {
     type: String
