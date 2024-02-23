@@ -78,7 +78,7 @@ const modalDataSchema = new mongoose.Schema({
   ColumnFooting: {
     type: String
   },
-  firstSlab: {
+  Slab: {
     type: [{
       ContentType: String,
       value: String,
