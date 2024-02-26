@@ -145,7 +145,6 @@ const modalDataSchema = new mongoose.Schema({
 });
 modalDataSchema.pre('save', async function (next) {
   const modalDataSchema = this;
-  console.log(modalDataSchema);
   next();
 })
 
