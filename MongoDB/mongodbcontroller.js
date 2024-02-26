@@ -18,15 +18,15 @@ class MongodbControllerInterface {
     }
 
     async getOne(query) {
-        return this.Modal.findOne(query)
+        return await this.Modal.findOne(query)
     }
 
-    async delete() {
-        console.log("delete");
+    async delete(query) {
+        return await this.Modal.deleteOne(query);
     }
 
-    async update() {
-        console.log("update");
+    async update(query, data) {
+        return await this.Modal.updateOne(query, data);
     }
 
     async replace(id, record, batch = null, replaceWithCreate = false) {

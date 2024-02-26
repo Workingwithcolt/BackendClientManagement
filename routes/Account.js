@@ -24,4 +24,29 @@ router.post('/', async (req, res) => {
     res.send(results);
 })
 
+router.put("/",
+    async function (req, res) {
+        let query = req.query ? req.query : {};
+        var accountsController =
+            req.locals.controllerFactory.getAccounts(req.locals);
+        let result = await accountsController.update(
+            query,
+            req.body
+        )
+        res.send(result)
+    });
+
+    router.delete("/",
+        async function (req, res) {
+            console.log("chetan");
+            let query = req.query ? req.query : {};
+            var accountsController =
+                req.locals.controllerFactory.getAccounts(req.locals);
+    
+            let result = await accountsController
+                .delete(query)
+                console.log(result);
+            res.send(result)
+        });
+
 module.exports = router
