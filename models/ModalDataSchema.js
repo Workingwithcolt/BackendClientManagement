@@ -103,7 +103,45 @@ const modalDataSchema = new mongoose.Schema({
   },
   AllElevation: {
     type: String
-  }
+  },
+  SanctionDrawing: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName:String
+    }
+  },
+  SanctionLetter: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName:String
+    }
+  },
+  ReviseSanction: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName:String
+    }
+  },
+  CompletionLetter: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName:String
+    }
+  },
+  Drawing: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName:String
+    }
+  },
+  pleanthCompletion: {
+    type: String
+  },
 });
 modalDataSchema.pre('save', async function (next) {
   const modalDataSchema = this;
