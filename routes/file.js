@@ -19,7 +19,6 @@ const upload = multer({
 router.post('/', upload.single('file'), async (req, res) => {
     var fileController =
         req.locals.controllerFactory.getFilesController(req.locals)
-    console.log(req.body);
     let data = await fileController.create(req.body)
     // await delteFileUnderFolder('D:/Server_Logingfg - Copy/public/Images')
     res.send(data)
