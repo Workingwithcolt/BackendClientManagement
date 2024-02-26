@@ -38,14 +38,12 @@ router.put("/",
 
     router.delete("/",
         async function (req, res) {
-            console.log("chetan");
             let query = req.query ? req.query : {};
             var accountsController =
                 req.locals.controllerFactory.getAccounts(req.locals);
     
             let result = await accountsController
                 .delete(query)
-                console.log(result);
             res.send(result)
         });
 
