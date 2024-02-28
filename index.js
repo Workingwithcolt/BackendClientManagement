@@ -13,7 +13,7 @@ const path = require('path')
 const bodyParser = require('body-parser')//neating and cleaning 
 // origin: 'http://localhost:19006',
 const corsOptions = {
-    origin: '*',
+    origin: 'http://192.168.42.67:8081',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     optionsSuccessStatus: 204,
