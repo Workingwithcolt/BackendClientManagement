@@ -3,6 +3,7 @@ const authRoutes = require("./routes/authroutes")
 const userRoutes = require("./routes/Users")
 const accountRoutes = require('./routes/Account')
 const fileRoutes = require('./routes/file')
+const indexRouter = require('./routes/index')
 const port = 3000;
 const cors = require("cors")
 const app = express();//middle ware
@@ -32,6 +33,7 @@ app.use(express.json({limit: '100mb'}));
 app.use(express.urlencoded({limit: '100mb', extended: true, parameterLimit: 50000}));
 app.use(bodyParser.json())//server se jo data ata hei voh json mei aa jaye so
 app.use(express.static('public/Images'))
+app.use("/", indexRouter);
 app.use(mongodbMiddleware)
 app.use("/auth", authRoutes)
 app.use("/users", userRoutes)
