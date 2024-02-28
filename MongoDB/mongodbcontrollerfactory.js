@@ -1,7 +1,7 @@
 const ModalDataSchema = require("../models/ModalDataSchema");
 const Users = require("../models/Users");
 const Files = require("../models/FileSchema")
-const MongodbControllerInterface = require("./mongodbcontroller")
+const MongodbControllerInterface = require("../MongoDB/mongodbcontroller")
 
 const SKIP_AUTH = true;
 
