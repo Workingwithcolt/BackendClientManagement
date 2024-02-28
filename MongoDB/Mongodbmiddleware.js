@@ -1,4 +1,4 @@
-const { MongodbControllerFactory } = require("./mongodbcontrollerfactory");
+const { MongodbControllerFactory } = require("./mongodbcontrollerFactory");
 
 const mongodbMiddleware = (req, res, next) => {
     req.locals = {}
