@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const cors = require("cors")
 const ModalDataSchema = require('../models/ModalDataSchema');
-const jwt = require('jsonwebtoken');
+const jwt  = require('jsonwebtoken');
 
 require('dotenv').config();
 "use strict";
@@ -75,7 +75,7 @@ router.post('/signin', async (req, res) => {
         const check = password.localeCompare(savedUser.password)
         if (check == 0) {
             console.log("password match");
-            const token = jwt.sign({ _id: savedUser._id }, process.env.JWT_SECRET);
+            const token = jwt.sign({ _id: savedUser._id }, process.env.jwt_secret);
             res.send({ token });
         }
         else {
