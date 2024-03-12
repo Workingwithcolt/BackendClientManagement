@@ -38,23 +38,41 @@ async function mailer(recieveremail, VerificationCode) {
 }
 
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res) => {    //signup is called form verification frontend and not signup
 
     console.log("signup clicked")
-    //console.log('data sent by clinet ' ,req.body);  
+    const { email, password, name, address, dob } = req.body;
+    console.log('data sent by clinet ' ,req.body);  
     var usersController =
         req.locals.controllerFactory.getUserController(req.locals)
     try {
-        await usersController.create(req.body)
-        token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+        // await usersController.create(req.body)                          //creating a succesfull saving on MongoDB
+        // token = jwt.sign({ _id: usersController._id }, process.env.jwt_secret);       //some kind of token
+        try {
+            await usersController.create(req.body); // Attempt to create a new user
+    
+            // If user creation is successful, generate JWT token
+            token = jwt.sign({ _id: usersController._id }, process.env.jwt_secret);
+    
+            // Send response indicating successful user registration along with the token
+            console.log("Request processed successfully");
+            res.status(200).send({ message: "User Registered Successfully", token });
+        } catch (createError) {
+            // Handle errors specific to user creation
+            console.error("Error creating user:", createError);
+            var errorMsg;
+            errorMsg= 'Error creating user';
+            
+        }
         //res.send("send working?")
         //res.send({ message: "User Registered Successfully", token });
-        res.send({ message: "User Registered Successfully", token });
-
-
+        console.log("i think sent from, backend and working fine ")
+      
     }
     catch (err) {
         console.log(err);
+        console.log("there is some error in the saving part");
+        res.status(500).send({ error: 'Internal server error' },errorMsg);
     }
 
 })
@@ -89,7 +107,7 @@ router.post('/signin', async (req, res) => {
 })
 
 
-router.post('/verify', async (req, res) => {
+router.post('/verify', async (req, res) => {//verify is called form signup frontend and not verification
     var usersController = req.locals.controllerFactory.getUserController(req.locals)
 
     const { name, email, password, dob, address } = req.body;
@@ -102,7 +120,7 @@ router.post('/verify', async (req, res) => {
     usersController.getOne({ email: email })
         .then(async (savedUser) => {
             if (savedUser) {
-                return res.status(422).json({ error: "Invalid Credentials" });
+                return res.status(422).json({ error: "email already exists" });
             }
             try {
                 let VerificationCode = Math.floor(100000 + Math.random() * 900000);
