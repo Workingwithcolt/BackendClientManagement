@@ -25,8 +25,7 @@ app.use(cors(corsOptions));
 //     next();
 //   });
 require('./db');
-require('./models/Users');
-require("./models/ModalDataSchema")
+
 
 const requireToken = require('./Middlewares/AuthTokenRequired');
 const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware');
