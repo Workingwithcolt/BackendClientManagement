@@ -34,7 +34,7 @@ app.use(express.json({limit: '100mb'}));
 app.use(express.urlencoded({limit: '100mb', extended: true, parameterLimit: 50000}));
 app.use(bodyParser.json())//server se jo data ata hei voh json mei aa jaye so
 app.use(express.static('public/Images'))
-app.use(mongodbMiddleware)
+// app.use(mongodbMiddleware)
 app.use("/", indexRouter);
 // app.use("/auth", authRoutes)
 // app.use("/users", userRoutes)
