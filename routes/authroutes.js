@@ -40,7 +40,7 @@ router.post('/signup', async (req, res) => {
         req.locals.controllerFactory.getUserController(req.locals)
     try {
         await usersController.create(req.body); // Attempt to create a new user
-        token = jwt.sign({ _id: usersController._id }, process.env.jwt_secret);
+        token = jwt.sign({ _id: usersController._id }, process.env.JWT_SECRET);
         res.status(200).send({ message: "User Registered Successfully", token });
     } catch (createError) {
         // Handle errors specific to user creation
@@ -68,7 +68,7 @@ router.post('/signin', async (req, res) => {
         const check = password.localeCompare(savedUser.password)
         if (check == 0) {
             console.log("password match");
-            const token = jwt.sign({ _id: savedUser._id }, process.env.jwt_secret);
+            const token = jwt.sign({ _id: savedUser._id }, process.env.JWT_SECRET);
             res.send({ token });
         }
         else {
