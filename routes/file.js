@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router();
 const multer = require('multer');
+const { asyncHandler } = require("../helper/helper");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -16,20 +17,22 @@ const upload = multer({
     storage: storage
 })
 
-router.post('/', upload.single('file'), async (req, res) => {
+router.post('/', upload.single('file'), asyncHandler(async (req, res) => {
     var fileController =
         req.locals.controllerFactory.getFilesController(req.locals)
     let data = await fileController.create(req.body)
     // await delteFileUnderFolder('D:/Server_Logingfg - Copy/public/Images')
     res.send(data)
-})
+}))
 
-router.get('/', async (req, res) => {
-    let query = req.query ? req.query : {};
-    var fileController =
-        req.locals.controllerFactory.getFilesController(req.locals)
-    let data = await fileController.getAll(query)
-    res.send(data)
-})
+router.get('/',
+    asyncHandler(
+        async (req, res) => {
+            let query = req.query ? req.query : {};
+            var fileController =
+                req.locals.controllerFactory.getFilesController(req.locals)
+            let data = await fileController.getAll(query)
+            res.send(data)
+        }))
 
 module.exports = router

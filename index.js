@@ -1,3 +1,4 @@
+const createError = require("http-errors");
 const express = require("express");
 const authRoutes = require("./routes/authroutes.js")
 const userRoutes = require("./routes/Users.js")
@@ -8,7 +9,7 @@ const port = 3000;
 const cors = require("cors")
 const app = express();//middle ware
 const multer = require('multer')
-const path = require('path')        
+const path = require('path')
 
 const bodyParser = require('body-parser')//neating and cleaning 
 // origin: 'http://localhost:19006',
@@ -30,8 +31,8 @@ require("./models/ModalDataSchema.js")
 console.log("after 30");
 const requireToken = require('./Middlewares/AuthTokenRequired.js');
 const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware.js');
-app.use(express.json({limit: '100mb'}));
-app.use(express.urlencoded({limit: '100mb', extended: true, parameterLimit: 50000}));
+app.use(express.json({ limit: '100mb' }));
+app.use(express.urlencoded({ limit: '100mb', extended: true, parameterLimit: 50000 }));
 app.use(bodyParser.json())//server se jo data ata hei voh json mei aa jaye so
 app.use(express.static('public/Images'))
 app.use(mongodbMiddleware)
@@ -51,7 +52,17 @@ app.get('/', requireToken, (req, res) => {
     res.send(req.user);
 })
 
-console.log("after 54");
+
+app.use(function (req, res, next) {
+    next(createError(404));
+});
+app.use(function (err, req, res, next) {
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
+    res.status(err.status || 500);
+    res.send(res.locals.error);
+});
+
 app.listen(port, () => {
     console.log(`Server is running on ${port}`)
 })
