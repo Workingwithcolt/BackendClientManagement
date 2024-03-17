@@ -27,7 +27,7 @@ app.use(cors(corsOptions));
 require('./db.js');
 require('./models/Users.js');
 require("./models/ModalDataSchema.js")
-
+console.log("after 30");
 const requireToken = require('./Middlewares/AuthTokenRequired.js');
 const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware.js');
 app.use(express.json({limit: '100mb'}));
@@ -35,17 +35,23 @@ app.use(express.urlencoded({limit: '100mb', extended: true, parameterLimit: 5000
 app.use(bodyParser.json())//server se jo data ata hei voh json mei aa jaye so
 app.use(express.static('public/Images'))
 app.use(mongodbMiddleware)
+console.log("after 38");
 app.use("/", indexRouter);
+console.log("after 40");
 app.use("/auth", authRoutes)
+console.log("after 42");
 app.use("/users", userRoutes)
+console.log("after 44");
 app.use("/account", accountRoutes)
+console.log("after 46");
 app.use("/file", fileRoutes)
 
-
+console.log("after 49");
 app.get('/', requireToken, (req, res) => {
     res.send(req.user);
 })
 
+console.log("after 54");
 app.listen(port, () => {
     console.log(`Server is running on ${port}`)
 })
