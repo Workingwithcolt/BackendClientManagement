@@ -10,8 +10,6 @@ const ACCOUNT_PATH = "ModalDataSchema";
 
 class MongodbControllerFactory {
     getUserController(local) {
-        console.log("what is users and locals printing from backend ",Users)
-        console.log(local)
         return new MongodbControllerInterface(Users, local);
     }
     getAccounts(local) {
