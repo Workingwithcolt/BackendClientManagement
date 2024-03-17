@@ -36,10 +36,10 @@ app.use(bodyParser.json())//server se jo data ata hei voh json mei aa jaye so
 app.use(express.static('public/Images'))
 app.use(mongodbMiddleware)
 app.use("/", indexRouter);
-app.use("/auth", authRoutes)
-app.use("/users", userRoutes)
-app.use("/account", accountRoutes)
-app.use("/file", fileRoutes)
+// app.use("/auth", authRoutes)
+// app.use("/users", userRoutes)
+// app.use("/account", accountRoutes)
+// app.use("/file", fileRoutes)
 
 
 app.get('/', requireToken, (req, res) => {
