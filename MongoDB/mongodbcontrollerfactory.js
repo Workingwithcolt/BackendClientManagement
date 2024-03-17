@@ -1,5 +1,5 @@
 const ModalDataSchema = require("../models/ModalDataSchema");
-const Users = require("../models/Users");
+const Users = require("../models/Users").default;
 const Files = require("../models/FileSchema")
 const MongodbControllerInterface = require("../MongoDB/mongodbcontroller")
 
