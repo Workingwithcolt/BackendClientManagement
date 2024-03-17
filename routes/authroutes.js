@@ -1,14 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const cors = require("cors")
-const ModalDataSchema = require('../models/ModalDataSchema');
-const jwt  = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
 "use strict";
 const nodemailer = require("nodemailer");
-const path = require('path')
-
 
 //node mailer
 async function mailer(recieveremail, VerificationCode) {
@@ -38,41 +35,19 @@ async function mailer(recieveremail, VerificationCode) {
 }
 
 
-router.post('/signup', async (req, res) => {    //signup is called form verification frontend and not signup
-
-    console.log("signup clicked")
-    const { email, password, name, address, dob } = req.body;
-    console.log('data sent by clinet ' ,req.body);  
+router.post('/signup', async (req, res) => {
     var usersController =
         req.locals.controllerFactory.getUserController(req.locals)
     try {
-        // await usersController.create(req.body)                          //creating a succesfull saving on MongoDB
-        // token = jwt.sign({ _id: usersController._id }, process.env.jwt_secret);       //some kind of token
-        try {
-            await usersController.create(req.body); // Attempt to create a new user
-    
-            // If user creation is successful, generate JWT token
-            token = jwt.sign({ _id: usersController._id }, process.env.jwt_secret);
-    
-            // Send response indicating successful user registration along with the token
-            console.log("Request processed successfully");
-            res.status(200).send({ message: "User Registered Successfully", token });
-        } catch (createError) {
-            // Handle errors specific to user creation
-            console.error("Error creating user:", createError);
-            var errorMsg;
-            errorMsg= 'Error creating user';
-            
-        }
-        //res.send("send working?")
-        //res.send({ message: "User Registered Successfully", token });
-        console.log("i think sent from, backend and working fine ")
-      
-    }
-    catch (err) {
-        console.log(err);
-        console.log("there is some error in the saving part");
-        res.status(500).send({ error: 'Internal server error' },errorMsg);
+        await usersController.create(req.body); // Attempt to create a new user
+        token = jwt.sign({ _id: usersController._id }, process.env.jwt_secret);
+        res.status(200).send({ message: "User Registered Successfully", token });
+    } catch (createError) {
+        // Handle errors specific to user creation
+        console.error("Error creating user:", createError);
+        var errorMsg;
+        errorMsg = 'Error creating user';
+        res.status(500).send({ error: 'Internal server error' }, errorMsg);
     }
 
 })
