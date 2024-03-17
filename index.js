@@ -1,14 +1,14 @@
 const express = require("express");
-const authRoutes = require("./routes/authroutes")
-const userRoutes = require("./routes/Users")
-const accountRoutes = require('./routes/Account')
-const fileRoutes = require('./routes/file')
+// const authRoutes = require("./routes/authroutes")
+// const userRoutes = require("./routes/Users")
+// const accountRoutes = require('./routes/Account')
+// const fileRoutes = require('./routes/file')
 const indexRouter = require('./routes/index')
 const port = 3000;
 const cors = require("cors")
 const app = express();//middle ware
-const multer = require('multer')
-const path = require('path')        
+// const multer = require('multer')
+// const path = require('path')        
 
 const bodyParser = require('body-parser')//neating and cleaning 
 // origin: 'http://localhost:19006',
