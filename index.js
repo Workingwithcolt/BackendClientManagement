@@ -11,7 +11,6 @@ const app = express();//middle ware
 const multer = require('multer')
 const path = require('path')
 
-const bodyParser = require('body-parser')//neating and cleaning 
 // origin: 'http://localhost:19006',
 const corsOptions = {
     origin: '*',
@@ -33,7 +32,7 @@ const requireToken = require('./Middlewares/AuthTokenRequired.js');
 const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware.js');
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ limit: '100mb', extended: true, parameterLimit: 50000 }));
-app.use(bodyParser.json())
+
 app.use(express.static('public/Images'))
 app.use(mongodbMiddleware)
 console.log("after 38");
