@@ -33,7 +33,7 @@ const requireToken = require('./Middlewares/AuthTokenRequired.js');
 const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware.js');
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ limit: '100mb', extended: true, parameterLimit: 50000 }));
-app.use(bodyParser.json())//server se jo data ata hei voh json mei aa jaye so
+app.use(bodyParser.json())
 app.use(express.static('public/Images'))
 app.use(mongodbMiddleware)
 console.log("after 38");

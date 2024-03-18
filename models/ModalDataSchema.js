@@ -1,26 +1,4 @@
-  const mongoose = require('mongoose');
-// AllElevation: "sd"
-// AllFloorPlan: "sd"
-// BuildingApprovalDate: "2024-02-01"
-// ColumnFooting: "sd"
-// CompletionDate: "2024-02-06"
-// FileModel3D: ["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACDQA…AAJUj0AAAAAAAAAAAVM7/A0SGFk9CxehRAAAAAElFTkSuQmCC"]
-// PleanthBeam: "sd"
-// PresentationDraw: ["data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACDQA…AAJUj0AAAAAAAAAAAVM7/A0SGFk9CxehRAAAAAElFTkSuQmCC"]
-// StairCaseDraw: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAACDQ
-// adhar: "sdsd"
-// buildingCompletionDate: "sd"
-// clientName: "sd"
-// email: "sdsd@gmail.com"
-// firstSlab: ["data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAAAAAAAD…QAlFLRQAlFLRQAlFLRQAlFLRQAlFLRQAlFLRQAlFLRQB//9k="]
-// pan: "sd"
-// pin: "sd"
-// plinth: "sd"
-// projectHead: "sdsd"
-// projectType: "sdsd"
-// rccDesignerName: "sd"
-// title: "asd"
-
+const mongoose = require('mongoose');
 const modalDataSchema = new mongoose.Schema({
   title: {
     type: String
@@ -30,6 +8,68 @@ const modalDataSchema = new mongoose.Schema({
 
   },
   projectType: {
+    type: String
+
+  },
+  siteAddress: {
+    type: String
+
+  },
+  CardFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  Map: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  gsfile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  gsNo: {
+    type: String
+
+  },
+  mahareraNo: {
+    type: String
+
+  },
+  mahareraFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  institudeNo: {
+    type: String
+
+  },
+  panFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  adharFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  additionalDetailCommentRemark: {
     type: String
 
   },
@@ -44,7 +84,7 @@ const modalDataSchema = new mongoose.Schema({
     type: [{
       ContentType: String,
       value: String,
-      fileName:String
+      fileName: String
     }],
   },
   BuildingApprovalDate: {
@@ -72,75 +112,151 @@ const modalDataSchema = new mongoose.Schema({
     type: [{
       ContentType: String,
       value: String,
-      fileName:String
+      fileName: String
     }]
   },
   ColumnFooting: {
-    type: String
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
   },
   Slab: {
     type: [{
       ContentType: String,
       value: String,
-      fileName:String
+      fileName: String
     }]
   },
   StairCaseDraw: {
     type: {
       ContentType: String,
       value: String,
-      fileName:String
+      fileName: String
     }
   },
   PleanthBeam: {
-    type: String
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
   },
   CompletionDate: {
     type: String
   },
   AllFloorPlan: {
-    type: String
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  toilet: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
   },
   AllElevation: {
-    type: String
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  AllElectricDrawingFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  AllSectionFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  AllGrillsAndRailingFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  tileLayoutFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  AllSectionFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  CompletionDrawingFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
   },
   SanctionDrawing: {
     type: {
       ContentType: String,
       value: String,
-      fileName:String
+      fileName: String
     }
   },
   SanctionLetter: {
     type: {
       ContentType: String,
       value: String,
-      fileName:String
+      fileName: String
     }
   },
   ReviseSanction: {
     type: {
       ContentType: String,
       value: String,
-      fileName:String
+      fileName: String
     }
   },
   CompletionLetter: {
     type: {
       ContentType: String,
       value: String,
-      fileName:String
+      fileName: String
     }
   },
   Drawing: {
     type: {
       ContentType: String,
       value: String,
-      fileName:String
+      fileName: String
     }
   },
   pleanthCompletion: {
-    type: String
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
+  },
+  ReviseSanctionLetterFile: {
+    type: {
+      ContentType: String,
+      value: String,
+      fileName: String
+    }
   },
 });
 modalDataSchema.pre('save', async function (next) {
