@@ -19,6 +19,7 @@ router.get(
 
 router.post('/', asyncHandler(async (req, res) => {
     console.log("print data");
+    console.log(req.body);
     var AccountController =
         req.locals.controllerFactory.getAccounts(req.locals)
     var results =
