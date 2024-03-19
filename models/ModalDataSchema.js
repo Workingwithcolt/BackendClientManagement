@@ -71,7 +71,6 @@ const modalDataSchema = new mongoose.Schema({
   },
   additionalDetailCommentRemark: {
     type: String
-
   },
   projectHead: {
     type: String
@@ -195,13 +194,6 @@ const modalDataSchema = new mongoose.Schema({
       fileName: String
     }
   },
-  AllSectionFile: {
-    type: {
-      ContentType: String,
-      value: String,
-      fileName: String
-    }
-  },
   CompletionDrawingFile: {
     type: {
       ContentType: String,
@@ -256,7 +248,7 @@ const modalDataSchema = new mongoose.Schema({
       ContentType: String,
       value: String,
       fileName: String
-    }
+    } 
   },
 });
 modalDataSchema.pre('save', async function (next) {

@@ -30,8 +30,13 @@ require("./models/ModalDataSchema.js")
 console.log("after 30");
 const requireToken = require('./Middlewares/AuthTokenRequired.js');
 const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware.js');
-app.use(express.json({ limit: '100mb' }));
-app.use(express.urlencoded({ limit: '100mb', extended: true, parameterLimit: 50000 }));
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({
+    extended: true, limit: '50mb'
+}));
+
+app.use(bodyParser.json({limit: '50mb'}));
 
 app.use(express.static('public/Images'))
 app.use(mongodbMiddleware)
