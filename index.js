@@ -33,10 +33,10 @@ const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware.js');
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({
-    extended: true, limit: '50mb'
+    extended: true, limit: '500mb'
 }));
 
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({limit: '500mb'}));
 
 app.use(express.static('public/Images'))
 app.use(mongodbMiddleware)
