@@ -32,12 +32,8 @@ const requireToken = require('./Middlewares/AuthTokenRequired.js');
 const { mongodbMiddleware } = require('./MongoDB/Mongodbmiddleware.js');
 const bodyParser = require("body-parser");
 
-app.use(bodyParser.json({limit: '500mb'}));
-
-app.use(bodyParser.urlencoded({
-    extended: false, limit: '500mb'
-}));
-
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use(express.static('public/Images'))
 app.use(mongodbMiddleware)
