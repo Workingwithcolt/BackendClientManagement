@@ -51,7 +51,67 @@ router.post('/signup', async (req, res) => {
     }
 
 })
+// Route handler to check if an email exists
+router.post('/check-email', async (req, res) => {
+    console.log("check-mail clicked")
+    
+    
+    const { email } = req.body;
 
+    console.log(req.body)
+  
+    try {
+      const user = await Users.findOne({ email });
+      if (user) {
+        // Email exists in the database
+        let VerificationCode = Math.floor(100000 + Math.random() * 900000);
+
+        await mailer("email",VerificationCode);
+        const vs = "Valid email"
+        res.send({message:vs,variable:VerificationCode})
+        
+        console.log("inside")
+        
+      } else {
+        // Email does not exist in the database
+        res.send("not a valid user");
+      }
+    } catch (error) {
+      console.error('Error checking email:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  router.post('/setPassword', async (req, res) => {
+    console.log("outside Try")
+    try {
+        // var usersController =
+        // req.locals.controllerFactory.getUserController(req.locals)
+        console.log("inside Try")
+        //const { password ,email} = req.body;
+        const { password: newPassword, email: newEmail } = req.body;
+      console.log("Printing req body",req.body)
+
+      // Assuming you have a way to identify the user, e.g., by username
+      const username = await Users.findOne({ newEmail });
+      console.log("findOne working ");
+      // Find user by username and update password
+      const user = await Users.findOneAndUpdate(
+        { email: newEmail },
+        { password: newPassword },
+        { new: true }
+      );
+      console.log("findOneAndUpdate working ");
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User ketan not found' });
+      }
+  
+      return res.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+      console.error('Error:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 router.post('/signin', async (req, res) => {
     var usersController =
         req.locals.controllerFactory.getUserController(req.locals)
