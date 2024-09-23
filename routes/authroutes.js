@@ -25,10 +25,10 @@ async function mailer(recieveremail, VerificationCode) {
     // send mail with defined transport object
     let info = await transporter.sendMail({
         from: "ketanmaheshdoshi@gmail.com", // sender address
-        to: "ketanmd123@gmail.com", // list of receivers
-        subject: "To verify yourself as a member of MGA please enter the code below", // Subject line
+        to: "mayoorg@gmail.com , ketanmd123@gmail.com", // list of receivers
+        subject: "Verification Details MGA", // Subject line
         text: `Enter under 10 mins  `, // plain text body
-        html: `<b>Code :  ${VerificationCode}</b>`, // html body
+        html: `<b>To verify yourself as a member of MGA please enter the code below:  ${VerificationCode}</b>`, // html body
     });
     console.log("Message sent: %s", info.messageId);
     console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
