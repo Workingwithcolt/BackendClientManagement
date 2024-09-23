@@ -25,7 +25,7 @@ async function mailer(recieveremail, VerificationCode) {
     // send mail with defined transport object
     let info = await transporter.sendMail({
         from: "ketanmaheshdoshi@gmail.com", // sender address
-        to: "mayoorg@gmail.com", // list of receivers
+        to: "ketanmd123@gmail.com", // list of receivers
         subject: "To verify yourself as a member of MGA please enter the code below", // Subject line
         text: `Enter under 10 mins  `, // plain text body
         html: `<b>Code :  ${VerificationCode}</b>`, // html body
